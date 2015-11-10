@@ -80,6 +80,8 @@ namespace lib9ifid
                     return new KeyValueLoadCommand(parameters);
                 case "KeyValueRemove":
                     return new KeyValueRemoveCommand(parameters);
+                case "RetrieveLastError":
+                    return new RetrieveLastError(parameters);
                 default:
                     throw new Exception($"Command '{commandName}'not recognized");
             }

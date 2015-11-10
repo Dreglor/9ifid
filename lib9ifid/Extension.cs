@@ -29,12 +29,23 @@
 \*****************************************************************************/
 
 using System;
+using System.Runtime.InteropServices;
+using System.Text;
+using RGiesecke.DllExport;
 
 namespace lib9ifid
 {
     public static class Extension
     {
         public static string LastError;
+
+        [DllExport("_RVExtension@12", CallingConvention = CallingConvention.Winapi)]
+        public static void RvExtension(StringBuilder output, int outputSize, [MarshalAs(UnmanagedType.LPStr)] string function)
+        {
+            output.Capacity = outputSize - 1;
+            output.Append(Invoke(function));
+        }
+
         public static string Invoke(string input)
         {
             try

@@ -32,7 +32,7 @@ using System;
 
 namespace lib9ifid
 {
-    internal abstract class Command
+    public abstract class Command
     {
         protected readonly string Cmd;
         protected readonly object[] Parameters;
@@ -62,6 +62,7 @@ namespace lib9ifid
         public static Command BuildCommand(string arguments)
         {
             //transform ARMA arguments into objects that can be used.
+            //expects [["command"],[...]]
             var passed = Utility.Deserialize(arguments);
             var commandName = passed[0][0] as string;
             var parameters = passed[1];
@@ -74,6 +75,8 @@ namespace lib9ifid
             //build the correct command object based on the command name (command name are case-sensitive)
             switch (commandName)
             {
+                case "Version":
+                    return new VersionCommand(parameters);
                 case "KeyValueStore":
                     return new KeyValueStoreCommand(parameters);
                 case "KeyValueLoad":
